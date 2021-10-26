@@ -1,0 +1,152 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{%block content%}
+
+<style>
+    .product{
+        width: 85%;
+        background-color: rgb(205, 235, 241);
+        box-shadow: 2px 2px 30px rgba(167,158,245,0.2);
+        display:flex;
+        margin: 30px auto;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        /* margin-top: -60px; */
+        position: relative;
+        background-size: 1000px;
+        background-position: center;
+        border-radius: 10px;
+
+        
+    }
+    .p-heading{
+        margin: 20px;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+    .p-heading h3{
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-align: center;
+        font-size: 3rem;
+        color: #323543;
+
+    }
+    .product-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap-reverse;
+        margin: 10px 0px;
+        width: 100%;
+
+    }
+    .p-box{
+        width:250px;
+        height: 330px;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 4px;
+        position: relative;
+        margin:10xp 30px;
+       
+        
+    }
+    .p-box img{
+
+        
+        height: 180px;
+        width: 200px;
+        margin-left: 25px;
+        margin-top: 10px;
+        
+        
+
+    }
+    .p-box p{
+        padding-left: 80px;
+        padding-top: 15px;
+        color: #3a3a3a90;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+
+    }
+    .price{
+        padding-left: 100px;
+        color:#2c2c2c;
+        font-family: poppins;
+        font-size: 1rem;
+
+    }
+    .buy-btn{
+        position: absolute;
+        width: 140px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: calibri;
+        left: 50%;
+        bottom: -20px;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        color: #ffffff;
+        background: linear-gradient(120deg,#6b60ec 20%,#a166f4);
+
+    }
+    .p-box:hover{
+        box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+        background-color: #accedb;
+
+    }
+    .p-box:hover .price{
+        color: #6b60ec;
+        transition: all ease 0.2s;
+    }
+
+
+</style>
+
+
+
+
+
+
+
+
+<section class="product">
+    <div class="p-heading">
+        <h3>Trendy Arrivals</h3>
+
+    </div>
+
+    <div class="product-container">
+        <!-- <div class="p-box">
+            <img src="{% static 'redbag.jpg' %}" alt="">
+            <p>black Leather Bag</p>
+            <a href="#" class="price">Ksh 43</a>
+            <a href="#" class="buy-btn">Add to Cart</a>
+
+        </div> -->
+        {%for i in cloth%}
+        <div class="p-box">
+            {% if i.image %}
+                <img src="{{i.image.url}}" alt="">
+            {% endif %}
+            <p>{{i.name}}</p>
+            <a href="#" class="price">Ksh {{i.price}}</a>
+            <p class="price">{{i.cloth_type}}     {{i.location}}</p>
+            <a href="#" class="buy-btn">Add to Cart</a>
+
+        </div>
+        {%endfor%}
+    </div>
+
+</section>
+
+
+
+
+{%endblock %}
