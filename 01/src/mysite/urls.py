@@ -19,7 +19,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from official.views import default_home_view, shopping_view,posting_view,contact_view
+from official.views import default_home_view, shopping_view,posting_view,contact_view,cart_view
+
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -29,6 +30,7 @@ urlpatterns = [
     path('shopping/',shopping_view, name ='shop'),
     path('post/',posting_view, name ='post'),
     path('contact/',contact_view, name ='contact'),
+    path('cart/',cart_view, name ='cart'),
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

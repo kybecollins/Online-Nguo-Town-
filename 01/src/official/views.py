@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView
 from official.forms import ClothForm
 from nguo.models import Clothes
+from carts.models import Cart
 
 # Create your views here.
 def default_home_view(request):
@@ -38,3 +39,11 @@ def posting_view(request):
 #     fields = '__all__'
 def contact_view(request):
     return render(request,'official/contact.html')
+
+
+def cart_view(request):
+    cart =Cart.objects.all()[0]
+    context = {
+        "cart":cart,
+    }
+    return render(request,'official/cart.html',context)
