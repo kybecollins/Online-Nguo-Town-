@@ -96,6 +96,21 @@
         background: linear-gradient(120deg,#6b60ec 20%,#a166f4);
 
     }
+    .view-btn{
+        position: absolute;
+        width: 100px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: calibri;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        color: #ffffff;
+        background: linear-gradient(120deg,#d55de0 20%,#a166f4);
+    }
     .p-box:hover{
         box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
         background-color: #accedb;
@@ -133,12 +148,14 @@
         {%for i in cloth%}
         <div class="p-box">
             {% if i.image %}
-                <img src="{{i.image.url}}" alt="">
+                <img src="{{i.image.url}}" alt="#">
             {% endif %}
-            <p>{{i.name}}</p>
-            <a href="#" class="price">Ksh {{i.price}}</a>
-            <p class="price">{{i.cloth_type}}     {{i.location}}</p>
-            <a href="#" class="buy-btn">Add to Cart</a>
+            <p>{{i.title}}</p>
+            <h1 class="price">Ksh {{i.price}}</h1>
+            <!-- <a href="#" class="price">Ksh {{i.price}}</a> -->
+            <!-- <p class="price">{{i.cloth_type}}     {{i.location}}</p> -->
+            <a href="{{i.get_absolute_url}}" class="view-btn">View</a>
+            <!-- <a href="{% url 'cart update' i.slug %}" class="buy-btn">Add to Cart</a> -->
 
         </div>
         {%endfor%}

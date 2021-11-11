@@ -1,0 +1,106 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{%block content%}
+<style>
+    img{
+        height: 500px;
+        width: 500px;
+        margin-left: 25px;
+        margin-top: 10px;
+    }
+</style>
+
+<h1>{{product.title}}</h1>
+
+<!-- <img src="{{product.image.url}}" alt="#"> -->
+
+
+
+
+<main>
+
+    <section class="appearance">
+        <div class="introduction">
+            <div class="intro-text">
+                <img src="{{product.image.url}}" alt="#">
+                
+
+            </div>
+            
+        </div>
+        <div class="lotty">
+            <!-- <img src="{% static 'clothes.jpg' %}" alt="#"> -->
+            <!-- <img src="{{product.image.url}}" alt="#"> -->
+            <h1>{{product.title}} </h1>
+                <p>{{product.description}} </p>
+            <!-- <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_mgdl0fkk.json" background="transparent"  speed="1"  style="width: 700px; height: 700px;" loop controls autoplay></lottie-player> -->
+            <div class="cta">
+                <a href="{% url 'cart update' product.slug %}"><button class="cta-shop">Add to Cart</button></a>
+                
+
+            </div>
+
+        </div>
+
+
+    </section>
+</main>
+<style type="text/css">
+.appearance{
+    display: flex;
+    width: 90%;
+    margin: auto;
+    min-height: 80vh;
+    align-items: center;
+
+
+
+}
+.introduction{
+    flex: 1;
+}
+.intro-text h1{
+    font-weight: 500;
+    font-size: 50px;
+
+}
+.intro-text p{
+    margin-top: 10px;
+    font-size: 20px;
+}
+.cta{
+
+    padding: 35px 0px 0px 0px;
+}
+.cta-shop{
+
+    border: 3px solid #9663e7;
+    background: transparent;
+    color: #23705d;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+}
+.cta-log{
+
+    border: 3px solid #9663e7;
+    background: transparent;
+    color: #157e63;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+}
+.lotty{
+    flex: 1;
+
+}
+
+.lotty script{
+    /* height: 20vh; */
+    height: 600px;
+    width: 600px;
+}
+</style>
+
+{%endblock %}

@@ -2,6 +2,10 @@
 from django.db import models
 from accounts.models import Customer
 
+from django.urls import reverse
+
+
+
 # Create your models here.
 class Tag(models.Model):
     name =models.CharField (max_length=200 ,null=True)
@@ -21,17 +25,25 @@ class Clothes(models.Model):
         ('Jacket','Jacket'),
         ('Shirt','Shirt')
     )
-    name =models.CharField (max_length=200 ,null=True)
+    title =models.CharField (max_length=200)
     price = models.CharField (max_length=200 ,null=True)
     cloth_type = models.CharField (max_length=200 ,null=True ,choices=CLOTHTYPES)
     location =models.CharField (max_length=200 ,null=True ,choices=LOCATIONS)
     description = models.CharField (max_length=300 ,blank=True,null=True)
+
+    slug = models.SlugField(unique=True)
     date_created = models.DateTimeField(auto_now_add = True)
     tags = models.ManyToManyField(Tag)
     image = models.ImageField(null =True ,blank =True,upload_to ='images/')
 
     def __str__(self) :
-        return self.name
+        return self.title
+
+    class Meta:
+        unique_together = ('title','slug') 
+
+    def get_absolute_url(self):
+        return reverse("detail",kwargs={"slug":self.slug})
 
 
 
