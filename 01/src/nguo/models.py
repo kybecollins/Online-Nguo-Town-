@@ -48,25 +48,25 @@ class Clothes(models.Model):
 
 
 
-class Order(models.Model):
-    STATUS = (
-        ('Pending','Pending'),
-        ('Shipping', 'Shipping'),
-        ('Delivered','Delivered'),
+# class Order(models.Model):
+#     STATUS = (
+#         ('Pending','Pending'),
+#         ('Shipping', 'Shipping'),
+#         ('Delivered','Delivered'),
 
-    )
-    LOCATIONS = (
-        ('Nairobi', 'Nairobi'),
-        ('Thika', 'Thika'),
-        ('Mombasa','Mombasa'),
+#     )
+#     LOCATIONS = (
+#         ('Nairobi', 'Nairobi'),
+#         ('Thika', 'Thika'),
+#         ('Mombasa','Mombasa'),
 
-    )
-    customer = models.ForeignKey(Customer,null=True,on_delete=models.SET_NULL)
-    product = models.ForeignKey(Clothes,null=True,on_delete=models.SET_NULL, related_name='orderproduct')
-    # location_order =models.ForeignKey(Clothes,null=True,on_delete=models.SET_NULL,related_name='locationorders')
-    location =models.CharField (max_length=200 ,null=True ,choices=LOCATIONS)
-    date_created = models.DateTimeField(auto_now_add = True)
-    status = models.CharField (max_length=300 ,null=True,choices=STATUS)
+#     )
+#     customer = models.ForeignKey(Customer,null=True,on_delete=models.SET_NULL)
+#     product = models.ForeignKey(Clothes,null=True,on_delete=models.SET_NULL, related_name='orderproduct')
+#     # location_order =models.ForeignKey(Clothes,null=True,on_delete=models.SET_NULL,related_name='locationorders')
+#     location =models.CharField (max_length=200 ,null=True ,choices=LOCATIONS)
+#     date_created = models.DateTimeField(auto_now_add = True)
+#     status = models.CharField (max_length=300 ,null=True,choices=STATUS)
     
 
 

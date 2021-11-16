@@ -66,6 +66,26 @@ def cart_view(request):
 def update_cart_view(request,slug):
 
     request.session.set_expiry(60480) #resets cart after 1 week
+    try:
+        qty = request.GET.get('qty')
+        update_qty = True
+    except:
+        qty = None
+        update_qty =False
+
+    notes = {}
+    try:
+        color = request.GET.get("color")
+        notes['color'] = color
+    except:
+        color =None
+
+    try:
+        size = request.GET.get("size")
+        notes['size'] = size
+    except:
+        size =None
+
 
     try:
         the_id=request.session['cart_Id']
@@ -86,10 +106,18 @@ def update_cart_view(request,slug):
         pass
     cart_item, created =CartItems.objects.get_or_create(cart=cart,product=product)
 
-    # if qty ==0:
-    #     cart_item.delete()
-    # else:s
-    #     cart_item.save()
+    if update_qty and qty:
+        if int(qty) <= 0:
+            cart_item.delete()
+        else:
+            cart_item.quantity =qty
+            cart_item.notes = notes
+            cart_item.save()
+
+            
+    else:
+        pass
+        
 
 
     # if not cart_item in cart.items.all():

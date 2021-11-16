@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts',
     'nguo',
     'carts',
+    'orders',
 
 
     'django.contrib.admin',

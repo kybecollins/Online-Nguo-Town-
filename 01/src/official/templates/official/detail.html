@@ -30,17 +30,42 @@
             
         </div>
         <div class="lotty">
-            <!-- <img src="{% static 'clothes.jpg' %}" alt="#"> -->
-            <!-- <img src="{{product.image.url}}" alt="#"> -->
-            <h1>{{product.title}} </h1>
-                <p>{{product.description}} </p>
-            <!-- <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_mgdl0fkk.json" background="transparent"  speed="1"  style="width: 700px; height: 700px;" loop controls autoplay></lottie-player> -->
-            <div class="cta">
-                <a href="{% url 'cart update' product.slug %}"><button class="cta-shop">Add to Cart</button></a>
-                
+            <div class="col-sm-8">
+
+            
+                <!-- <img src="{% static 'clothes.jpg' %}" alt="#"> -->
+                <!-- <img src="{{product.image.url}}" alt="#"> -->
+                <div class="col-sm-8 pull-left">
+                    <h1>{{product.title}} </h1>
+                    <p>{{product.description}} </p>
+                </div>
+                <!-- <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_mgdl0fkk.json" background="transparent"  speed="1"  style="width: 700px; height: 700px;" loop controls autoplay></lottie-player> -->
+                <div class="col-sm-8 pull-left">
+                    <div class="cta">
+                        <form class="form pull-right" method="GET" action="{% url 'cart update' product.slug %}">
+                            <input class="form-control" name="qty" type="number" value="1"/>
+                            <!-- <input class="form-control" name="attr" type="number" placeholder="color"> -->
+                            
+                            <select  class="form-control" name="color" >
+                                <option value="red">Red</option>
+                                <option value="blue">Blue</option>
+
+                            </select>
+                            <select  class="form-control" name="size" >
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+
+                            </select>
+                            <input class="btn btn-default btn-block" type="submit" value="Add to cart">
+
+                        </form>
+                        <!-- <a href="{% url 'cart update' product.slug %}"><button class="cta-shop">Add to Cart</button></a>
+                        -->
+                    </div>
+                </div>
 
             </div>
-
         </div>
 
 
@@ -56,6 +81,9 @@
 
 
 
+}
+form{
+    padding-bottom: 20px;
 }
 .introduction{
     flex: 1;
