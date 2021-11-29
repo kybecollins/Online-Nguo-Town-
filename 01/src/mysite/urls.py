@@ -19,7 +19,7 @@ from django.urls import path,re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from official.views import default_home_view, shopping_view,posting_view,contact_view,cart_view,detail_view, update_cart_view
+from official.views import default_home_view, shopping_view,posting_view,contact_view,cart_view,detail_view, add_cart_view
 
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -30,7 +30,7 @@ urlpatterns = [
     path('shopping/',shopping_view, name ='shop'),
     path('shopping/<slug:slug>/',detail_view, name ='detail'),
     # re_path(r'^cart/(?P<slug>[\w-]+)/(?P<qty>\d+)/$',update_cart_view, name ='cart update'),
-    path('cart/<slug:slug>/',update_cart_view, name ='cart update'),
+    path('cart/<slug:slug>/',add_cart_view, name ='cart add'),
     path('post/',posting_view, name ='post'),
     path('contact/',contact_view, name ='contact'),
     path('cart/',cart_view, name ='cart'),

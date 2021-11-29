@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.db.models.fields import CharField
 from accounts.models import Customer
 
 from django.urls import reverse
@@ -67,7 +68,33 @@ class Clothes(models.Model):
 #     location =models.CharField (max_length=200 ,null=True ,choices=LOCATIONS)
 #     date_created = models.DateTimeField(auto_now_add = True)
 #     status = models.CharField (max_length=300 ,null=True,choices=STATUS)
+
+class VariationManager(models.Manager):
+    def all(self):
+        return super(VariationManager,self).filter(active =True)
+
+    def sizes(self):
+        return self.all().filter(category = 'size')
     
+    def colors(self):
+        return self.all().filter(category = 'color')
+
+VAR_CATEGORIES = (
+     ('size','size'),
+     ('color','color'),
+ )    
+
+class Variation(models.Model):
+    product =models.ForeignKey(Clothes, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    category = models.CharField(max_length=150,choices=VAR_CATEGORIES, default='size')
+    price = models.DecimalField(max_digits=80, null=True, blank=True, decimal_places=2)
+    date_created = models.DateTimeField(auto_now_add = True)
+    active = models.BooleanField(default=True)
+
+    objects = VariationManager()
+    def __str__(self):
+        return self.title
 
 
 

@@ -2,8 +2,9 @@ from django.http.response import Http404
 from django.shortcuts import render,HttpResponseRedirect
 from django.views.generic import CreateView
 from official.forms import ClothForm
-from nguo.models import Clothes
+from nguo.models import Clothes,Variation
 from carts.models import Cart,CartItems
+
 
 
 from django.urls import reverse
@@ -63,29 +64,9 @@ def cart_view(request):
 
     return render(request,'official/cart.html',context)
 
-def update_cart_view(request,slug):
+def add_cart_view(request,slug):
 
     request.session.set_expiry(60480) #resets cart after 1 week
-    try:
-        qty = request.GET.get('qty')
-        update_qty = True
-    except:
-        qty = None
-        update_qty =False
-
-    notes = {}
-    try:
-        color = request.GET.get("color")
-        notes['color'] = color
-    except:
-        color =None
-
-    try:
-        size = request.GET.get("size")
-        notes['size'] = size
-    except:
-        size =None
-
 
     try:
         the_id=request.session['cart_Id']
@@ -104,40 +85,83 @@ def update_cart_view(request,slug):
         pass
     except:
         pass
-    cart_item, created =CartItems.objects.get_or_create(cart=cart,product=product)
 
-    if update_qty and qty:
-        if int(qty) <= 0:
-            cart_item.delete()
-        else:
-            cart_item.quantity =qty
-            cart_item.notes = notes
-            cart_item.save()
-
+    product_variations=[]
+    if request.method == "POST":
+        qty = request.POST['qty']
+        
             
-    else:
-        pass
+        for item in request.POST:
+            key =item
+            val = request.POST[key]
+            try:
+                v = Variation.objects.get(product = product,category__iexact = key,title__iexact=val)
+                print (v)
+                product_variations.append(v)
+            except:
+                pass    
+        cart_item =CartItems.objects.create(cart=cart,product=product)
+
+    
+        
+        
+        if len(product_variations)>0:
+            # cart_item.variations.clear()
+            # for item in product_variations:
+            cart_item.variations.add(*product_variations)
+        cart_item.quantity =qty
+        # cart_item.notes = notes
+        cart_item.save()
+    
+
+
+        # if not cart_item in cart.cartitems_set.all():
+        #     cart.items.add(cart_item)
+        # else:
+        #     cart.items.remove(cart_item)
+
+
+
+        cart_price  = 0.00
+        for item in cart.cartitems_set.all():
+            total_line = float(item.product.price) * item.quantity
+
+            cart_price += total_line
+
+        request.session['items_total'] = cart.cartitems_set.count()
+        cart.total = cart_price
+        cart.save()
+        return HttpResponseRedirect(reverse("cart"))
+
+        return HttpResponseRedirect(reverse("cart"))
         
 
 
-    # if not cart_item in cart.items.all():
-    #     cart.items.add(cart_item)
-    # else:
-    #     cart.items.remove(cart_item)
+    # try:
+    #     qty = request.GET.get('qty')
+    #     update_qty = True
+    # except:
+    #     qty = None
+    #     update_qty =False
+
+    # notes = {}
+    # try:
+    #     color = request.GET.get("color")
+    #     notes['color'] = color
+    # except:
+    #     color =None
+
+    # try:
+    #     size = request.GET.get("size")
+    #     notes['size'] = size
+    # except:
+    #     size =None
 
 
+   
+   
 
-    cart_price  = 0.00
-    for item in cart.cartitems_set.all():
-        total_line = float(item.product.price) * item.quantity
-
-        cart_price += total_line
-
-    request.session['items_total'] = cart.cartitems_set.count()
-    cart.total = cart_price
-    cart.save()
-
-    return HttpResponseRedirect(reverse("cart"))
+   
 
 def detail_view(request,slug):
     try:
@@ -147,7 +171,8 @@ def detail_view(request,slug):
         }
         return render(request,'official/detail.html',context)
     except:
-        raise Http404
+        pass
+        # raise Http404
 
 
 
