@@ -47,11 +47,12 @@
             </ul>
         {%endif%}
     </td>
-    <td><a href="{% url 'cart add' item.product.slug%}?qty=0">Remove</a></td>
+    <td><a href="{% url 'remove cart' item.id %}">Remove</a></td>
 </tr>
 {%endfor%}
 </table>
-
+ <br>
+ <a href="{% url 'checkout'%}">Checkout</a>
 
 {%endif%}
 </div>

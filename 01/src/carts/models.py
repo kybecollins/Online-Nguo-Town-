@@ -3,7 +3,7 @@ from nguo.models import Clothes,Variation
 # Create your models here.
 
 class CartItems(models.Model):
-    cart = models.ForeignKey('Cart', null=True, blank=True,on_delete=models.DO_NOTHING)
+    cart = models.ForeignKey('Cart', null=True, blank=True,on_delete=models.CASCADE)
     product = models.ForeignKey(Clothes,on_delete=models.DO_NOTHING)
     variations =models.ManyToManyField(Variation, blank=True)
     quantity = models.IntegerField(default=1)

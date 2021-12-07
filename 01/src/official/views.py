@@ -46,12 +46,21 @@ def contact_view(request):
 def cart_view(request):
     try:
         the_id=request.session['cart_Id']
-
+        cart =Cart.objects.get(id =the_id)
     except:
         the_id = None
     
     if the_id:
-        cart =Cart.objects.get(id =the_id)
+        
+        cart_price  = 0.00
+        for item in cart.cartitems_set.all():
+            total_line = float(item.product.price) * item.quantity
+
+            cart_price += total_line
+
+        request.session['items_total'] = cart.cartitems_set.count()
+        cart.total = cart_price
+        cart.save()
         context = {
             "cart":cart,
             }
@@ -63,6 +72,22 @@ def cart_view(request):
                 }
 
     return render(request,'official/cart.html',context)
+
+def remove_cart(request,id):
+    try:
+        the_id=request.session['cart_Id']
+        cart =Cart.objects.get(id =the_id)
+    except:
+        return HttpResponseRedirect(reverse("cart"))
+
+    cartitem = CartItems.objects.get(id=id)   
+    # cartitem.delete()
+    cartitem.cart = None
+    cartitem.save()
+    return HttpResponseRedirect(reverse("cart"))
+
+        
+
 
 def add_cart_view(request,slug):
 
@@ -122,18 +147,10 @@ def add_cart_view(request,slug):
 
 
 
-        cart_price  = 0.00
-        for item in cart.cartitems_set.all():
-            total_line = float(item.product.price) * item.quantity
-
-            cart_price += total_line
-
-        request.session['items_total'] = cart.cartitems_set.count()
-        cart.total = cart_price
-        cart.save()
+       
         return HttpResponseRedirect(reverse("cart"))
 
-        return HttpResponseRedirect(reverse("cart"))
+    return HttpResponseRedirect(reverse("cart"))
         
 
 
