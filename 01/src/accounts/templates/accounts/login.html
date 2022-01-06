@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{%block content%}
+<style type="text/css">
+    .contain{
+        position: absolute;
+        right: 700px;
+        margin-top: 150px;
+  
+        
+    }
+
+</style>
+
+<div class="contain">
+    <form action="" method="POST">{%csrf_token%}
+        {{form.as_p}}
+        <input type="submit" value="Login" class="btn btn-default" />
+    </form>
+    
+</div>
+
+
+
+{%endblock %}

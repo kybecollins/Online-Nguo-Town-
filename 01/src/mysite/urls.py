@@ -31,6 +31,9 @@ urlpatterns = [
     path('shopping/<slug:slug>/',detail_view, name ='detail'),
     # re_path(r'^cart/(?P<id>\d+)/$','remove_cart', name ='remove cart',
 
+    path('order/',include("orders.urls")),
+    path('accounts/',include("accounts.urls")),
+
     # re_path(r'^cart/(?P<slug>[\w-]+)/(?P<qty>\d+)/$',update_cart_view, name ='cart update'),
     path('cart/<int:id>/',remove_cart, name ='remove cart'),
     path('cart/<slug:slug>/',add_cart_view, name ='cart add'),
@@ -38,7 +41,7 @@ urlpatterns = [
     path('contact/',contact_view, name ='contact'),
     path('cart/',cart_view, name ='cart'),
     path('cart/',cart_view, name ='cart'),
-    path('order/',include("orders.urls"))
+    
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
